@@ -43,15 +43,33 @@ def scrape_next_page_link(html_content):
 # Requisito 4
 def scrape_noticia(html_content):
     """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+    url_links = selector.css("link[rel='canonical']::attr(href)").get()
+    title = selector.css('.entry-title::text').get().strip()
+    date = selector.css('.meta-date::text').get()
+    author = selector.css('.author a::text').get()
+    all_comments = selector.css('#comment').getall()
+    tags = selector.css("a[rel='tag']::text").getall()
+    category = selector.css('.label::text').get()
+    fist_comment = selector.xpath(
+      "string(.//div[@class='entry-content']/p)"
+    ).get().strip()
+
+
+    dist_noticia = {
+      'url': url_links,
+      'title': title,
+      'timestamp': date,
+      'writer': author,
+      'comments_count': len(all_comments),
+      'summary': fist_comment,
+      'tags': tags,
+      'category': category,
+    }
+
+    return dist_noticia
 
 
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
-
-
-if __name__ == '__main__':
-    # print(fetch('https://blog.betrybe.com/'))
-    html = fetch('https://blog.betrybe.com/')
-    # print(html)
-    print(scrape_noticia(html))
