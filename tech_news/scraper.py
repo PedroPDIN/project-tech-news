@@ -42,4 +42,4 @@ def get_tech_news(amount):
 
 
 if __name__ == '__main__':
-  print(fetch('https://blog.betrybe.com/'))
+    print(fetch('https://blog.betrybe.com/'))
