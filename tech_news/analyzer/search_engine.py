@@ -6,7 +6,7 @@ from tech_news.database import search_news
 def search_by_title(title):
     """Seu código deve vir aqui"""
     all_news = search_news({'title': {'$regex': title, '$options': 'i'}})
-    # print(all_news)
+    # https://www.mongodb.com/developer/products/mongodb/schema-design-anti-pattern-case-insensitive-query-index/
     data_new = []
 
     for new in all_news:
@@ -33,6 +33,13 @@ def search_by_date(date):
 # Requisito 8
 def search_by_tag(tag):
     """Seu código deve vir aqui"""
+    tags_new = []
+    all_tags = search_news({'tags': {'$regex': tag, '$options': 'i'}})
+
+    for new in all_tags:
+        tags_new.append((new['title'], new['url']))
+
+    return tags_new
 
 
 # Requisito 9
